@@ -1,0 +1,18 @@
+# ninja log v7
+2	65	1773568474832535230	build.ninja	1ae2e6bba73321dc
+2	65	1773568474829068274	/home/brusenin/projects/kasptest/build/cmake_install.cmake	1ae2e6bba73321dc
+2	65	1773568474829301375	/home/brusenin/projects/kasptest/build/third_party/cmake_install.cmake	1ae2e6bba73321dc
+2	65	1773568474829301375	/home/brusenin/projects/kasptest/build/src/cmake_install.cmake	1ae2e6bba73321dc
+2	65	1773568474830535199	/home/brusenin/projects/kasptest/build/tests/cmake_install.cmake	1ae2e6bba73321dc
+2	65	1773568474829301375	/home/brusenin/projects/kasptest/build/CTestTestfile.cmake	1ae2e6bba73321dc
+2	65	1773568474830077661	/home/brusenin/projects/kasptest/build/src/CTestTestfile.cmake	1ae2e6bba73321dc
+2	65	1773568474831855729	/home/brusenin/projects/kasptest/build/tests/CTestTestfile.cmake	1ae2e6bba73321dc
+1	2395	1773564229943078559	tests/CMakeFiles/unitests.dir/unit.cc.o	83eeedb0e5c99b24
+2	327	1773568474832535230	build.ninja	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/cmake_install.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/third_party/cmake_install.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/src/cmake_install.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/tests/cmake_install.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/CTestTestfile.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/src/CTestTestfile.cmake	1ae2e6bba73321dc
+2	327	1773568474832535230	/home/brusenin/projects/kasptest/build/tests/CTestTestfile.cmake	1ae2e6bba73321dc

@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/brusenin/projects/kasptest/build",
+  "command": "/usr/bin/c++  -g -g -std=gnu++20 -o tests/CMakeFiles/unitests.dir/unit.cc.o -c /home/brusenin/projects/kasptest/tests/unit.cc",
+  "file": "/home/brusenin/projects/kasptest/tests/unit.cc",
+  "output": "/home/brusenin/projects/kasptest/build/tests/CMakeFiles/unitests.dir/unit.cc.o"
+}
+]
