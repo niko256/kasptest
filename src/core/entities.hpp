@@ -8,7 +8,7 @@ namespace kasptest::core {
 
 /* *---*---*---*---*---*---*---*---*---*---*---*---* */
 
-struct ThreatPattern {
+struct Infection {
     /* human-readable identifier */
     std::string identifier_;
 
