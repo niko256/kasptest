@@ -1,10 +1,11 @@
 ADD_LIBRARY(sys)
 
-TARGET_INCLUDE_DIRECTORIES(
-  sys
-    INTERFACE
-      ${CMAKE_CURRENT_SOURCE_DIR}/..
+SET(
+  SYS_SOURCES
+    poller.cc
+    
 )
+
 
 TARGET_LINK_LIBRARIES(
   sys
