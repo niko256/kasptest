@@ -11,3 +11,5 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/nlohmann/json.git
   GIT_TAG master
 )
+
+FetchContent_MakeAvailable(googletest json)
