@@ -12,8 +12,8 @@ namespace kasptest::core {
  * since input data stream is sliced into chunks, it has to handle
  * special cases when pattern is split between two chunks
  *
- * => it has to keep track of the last prefix_len_ := [max_pattern_len - 1] bytes
- * of the previous chunk
+ * => it has to keep track of the last prefix_len_ := [max_pattern_len - 1]
+ * bytes of the previous chunk
  */
 class StreamScanner {
   private:
