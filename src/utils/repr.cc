@@ -72,22 +72,31 @@ auto serialize_result(const core::ScanResult& res) -> std::string {
     return j.dump();
 }
 
-auto deserialize_result(std::string_view content) -> core::ScanResult {
-    /*
-     * ...
-     */
+auto serialize_stats(const core::StatSnapshot& stats) -> std::string {
+    json j = stats;
+
+    return j.dump();
 }
 
-auto serialize_stats(const core::StatSnapshot& stats) -> std::string {
-    /*
-     * ...
-     */
+auto deserialize_result(std::string_view content) -> core::ScanResult {
+    try {
+        json j = json::parse(content);
+
+        return j.get<core::ScanResult>();
+    } catch (const json::exception& err) {
+        throw std::invalid_argument(
+            "failed to dererealize scan reuslt : " + std::string(err.what())
+        );
+    }
 }
 
 auto deserialize_stats(std::string_view content) -> core::StatSnapshot {
-    /*
-     * ...
-     */
+    try {
+    } catch (const json::exception& err) {
+        throw std::invalid_argument(
+            "failed to deserialize statistics into snapshot : " + std::string(err.what())
+        );
+    }
 }
 
 }  // namespace kasptest::utils::repr
