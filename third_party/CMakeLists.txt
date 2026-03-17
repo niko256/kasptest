@@ -1,12 +1,12 @@
 INCLUDE(FetchContent)
 
 
-FetchContent_Declare(
-  spdlog
-  GIT_REPOSITORY https://github.com/gabime/spdlog.git
-  GIT_TAG v1.x
-  GIT_SHALLOW TRUE
-)
+# FetchContent_Declare(
+#   spdlog
+#   GIT_REPOSITORY https://github.com/gabime/spdlog.git
+#   GIT_TAG master
+#   GIT_SHALLOW TRUE
+# )
 
 
 FetchContent_Declare(
@@ -23,4 +23,4 @@ FetchContent_Declare(
   GIT_SHALLOW TRUE
 )
 
-FetchContent_MakeAvailable(googletest json spdlog)
+FetchContent_MakeAvailable(googletest json)

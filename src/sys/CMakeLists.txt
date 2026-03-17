@@ -18,5 +18,5 @@ TARGET_LINK_LIBRARIES(
     PUBLIC
       core
     PRIVATE
-      spdlog::spdlog
+      # spdlog::spdlog
 )
