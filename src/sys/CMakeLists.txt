@@ -5,6 +5,7 @@ SET(
     fifo.cc
     net/listener.cc
     net/conn.cc
+    fork_spawn.cc
 )
 
 ADD_LIBRARY(
@@ -18,5 +19,5 @@ TARGET_LINK_LIBRARIES(
     PUBLIC
       core
     PRIVATE
-      # spdlog::spdlog
+      spdlog::spdlog
 )
