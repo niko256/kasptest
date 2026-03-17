@@ -8,7 +8,7 @@ namespace kasptest::sys::net {
 /* @brief RAII wrapper for server-side TCP sock */
 class TcpListener {
   private:
-    core::FdGuard fd_;
+    core::FdGuard fd_guard_;
 
   public:
     /* creates listening socket on given port */

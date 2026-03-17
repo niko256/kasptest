@@ -16,10 +16,12 @@ namespace kasptest::sys::net {
  */
 
 TcpConnection::TcpConnection(int fd)
-    : fd_(fd) {}
+    : fd_guard_(fd) {}
+
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
 
 TcpConnection TcpConnection::connect(const std::string& host, int port) {
-    core ::FdGuard guard(::socket(AF_INET, SOCK_STREAM, 0));
+    core::FdGuard guard(::socket(AF_INET, SOCK_STREAM, 0));
 
     if (not guard.valid()) {
         throw std::runtime_error("socket() failed...");
@@ -29,12 +31,14 @@ TcpConnection TcpConnection::connect(const std::string& host, int port) {
     addrr.sin_family = AF_INET;   /* v4 family */
     addrr.sin_port = htons(port); /* little endian -> big endian */
 
+
+
     /* host string -> binary repr */
-    if (::inet_pton(AF_INET, host.c_str(), &addrr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, host.c_str(), &addrr.sin_addr) <= 0) {
         throw std::runtime_error("invalid address... : " + host);
     }
 
-    if (::connect(guard.get(), reinterpret_cast<sockaddr*>(&addrr), sizeof(addrr)) < 0) {
+    if (::connect(guard.get_fd(), reinterpret_cast<sockaddr*>(&addrr), sizeof(addrr)) < 0) {
         throw std::runtime_error("connect() failed...");
     };
 
@@ -45,17 +49,21 @@ TcpConnection TcpConnection::connect(const std::string& host, int port) {
     return TcpConnection(guard.release());
 }
 
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
+
 void TcpConnection::send_all(std::string_view data) {
     size_t total = 0;
 
     while (total < data.size()) {
-        auto sent = send(fd_.get(), data.data() + total, data.size() - total, MSG_NOSIGNAL);
-        /* disable signaling on broken connection */
+        /* disable signaling on broken connection [MSG_NOSIGNAL] */
+
+
+        auto sent
+            = send(fd_guard_.get_fd(), data.data() + total, data.size() - total, MSG_NOSIGNAL);
 
         if (sent < 0) {
             throw std::runtime_error("send() failed...");
         }
-
         total += sent;
     }
 
@@ -64,12 +72,14 @@ void TcpConnection::send_all(std::string_view data) {
      */
 }
 
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
+
 std::string TcpConnection::recv_all() {
     std::string res;
     char buffer[4096];
 
     while (true) {
-        auto received = recv(fd_.get(), buffer, sizeof(buffer), 0);
+        auto received = recv(fd_guard_.get_fd(), buffer, sizeof(buffer), 0);
 
         if (received < 0) {
             throw std::runtime_error("recv() failed...");
@@ -85,8 +95,10 @@ std::string TcpConnection::recv_all() {
     return res;
 }
 
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
+
 void TcpConnection::shutdown_write() {
-    if (shutdown(fd_.get(), SHUT_WR) < 0) {
+    if (shutdown(fd_guard_.get_fd(), SHUT_WR) < 0) {
         throw std::runtime_error("shutdown() failed...");
     }
     /*
@@ -95,7 +107,7 @@ void TcpConnection::shutdown_write() {
 }
 
 int TcpConnection::fd() const {
-    return fd_.get();
+    return fd_guard_.get_fd();
 }
 
 }  // namespace kasptest::sys::net

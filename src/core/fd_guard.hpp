@@ -47,7 +47,7 @@ class FdGuard {
         return *this;
     }
 
-    int get() const noexcept {
+    int get_fd() const noexcept {
         return fd_;
     }
 

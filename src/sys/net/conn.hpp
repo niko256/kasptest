@@ -8,7 +8,7 @@ namespace kasptest::sys::net {
 
 class TcpConnection {
   private:
-    core::FdGuard fd_;
+    core::FdGuard fd_guard_;
 
   public:
     explicit TcpConnection(int fd);
