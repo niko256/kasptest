@@ -1,7 +1,10 @@
 #include "repr.hpp"
 
 #include <nlohmann/json.hpp>
+#include <stdexcept>
+#include <string>
 #include <string_view>
+#include <vector>
 
 using json = nlohmann::json;
 
@@ -51,15 +54,22 @@ void to_json(json& dest, const StatSnapshot& snap) {
 namespace kasptest::utils::repr {
 
 auto parse_config(std::string_view content) -> std::vector<core::Infection> {
-    /*
-     * ...
-     */
+    try {
+        json j = json::parse(content);
+
+
+        j.get<std::vector<core::Infection>>();
+
+    } catch (const json::exception& err) { /* https://json.nlohmann.me/home/exceptions/ */
+        throw std::invalid_argument("failed to parse config : " + std::string(err.what()));
+    }
 }
 
 auto serialize_result(const core::ScanResult& res) -> std::string {
-    /*
-     * ...
-     */
+    json j = res;
+
+    /* json -> str representation */
+    return j.dump();
 }
 
 auto deserialize_result(std::string_view content) -> core::ScanResult {

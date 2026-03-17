@@ -3,7 +3,9 @@ ADD_LIBRARY(sys)
 SET(
   SYS_SOURCES
     poller.cc
-    
+    signal.cc
+    fifo.cc
+
 )
 
 
