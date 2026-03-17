@@ -1,13 +1,16 @@
 INCLUDE(FetchContent)
 
+# *---*---*---*---*---*---*---*---*---*---*---*
 
-# FetchContent_Declare(
-#   spdlog
-#   GIT_REPOSITORY https://github.com/gabime/spdlog.git
-#   GIT_TAG master
-#   GIT_SHALLOW TRUE
-# )
+# tracing
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG master
+  GIT_SHALLOW TRUE
+)
 
+# *---*---*---*---*---*---*---*---*---*---*---*
 
 FetchContent_Declare(
     googletest
@@ -16,6 +19,8 @@ FetchContent_Declare(
     GIT_SHALLOW TRUE
 )
 
+# *---*---*---*---*---*---*---*---*---*---*---*
+
 FetchContent_Declare(
   json
   GIT_REPOSITORY https://github.com/nlohmann/json.git
@@ -23,4 +28,6 @@ FetchContent_Declare(
   GIT_SHALLOW TRUE
 )
 
-FetchContent_MakeAvailable(googletest json)
+# *---*---*---*---*---*---*---*---*---*---*---*
+
+FetchContent_MakeAvailable(googletest json spdlog)

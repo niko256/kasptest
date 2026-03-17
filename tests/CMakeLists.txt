@@ -1,8 +1,6 @@
 SET(CMAKE_BUILD_TYPE Debug)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 
-# *---*---*---*---*---*---*---*---*---*---*---*
-
 # ADD_SUBDIRECTORY(...)
 
 SET(
@@ -20,6 +18,9 @@ TARGET_LINK_LIBRARIES(
   unitests
     PRIVATE
       gtest_main
+      core
+      utils
 )
 
-# *---*---*---*---*---*---*---*---*---*---*---*
+INCLUDE(GoogleTest)
+GTEST_DISCOVER_TESTS(unitests)

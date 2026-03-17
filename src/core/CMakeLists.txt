@@ -5,9 +5,3 @@ TARGET_INCLUDE_DIRECTORIES(
     INTERFACE
       ${CMAKE_CURRENT_SOURCE_DIR}/..
 )
-
-TARGET_LINK_LIBRARIES(
-  core
-    INTERFACE
-      nlohman_json::nlohman_json
-)
