@@ -86,7 +86,7 @@ std::vector<core::ScanResult> PipeResultSink::collect() {
     }
 
     size_t pos = 0;
-    while (pos = read_buff_.find('\n') != std::string::npos) {
+    while ((pos = read_buff_.find('\n')) != std::string::npos) {
         std::string json_line = read_buff_.substr(0, pos);
 
         read_buff_.erase(0, pos + 1);
