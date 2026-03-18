@@ -1,4 +1,4 @@
-#include "fifo.hpp"
+#include "fifo_guard.hpp"
 #include <cerrno>
 #include <fcntl.h>
 #include <spdlog/spdlog.h>
@@ -9,8 +9,11 @@
 
 namespace kasptest::sys::ipc {
 
-Fifo::Fifo(const std::string& path)
+FifoGuard::FifoGuard(const std::string& path)
     : path_(path) {
+    /* */
+    spdlog::info("[debug] : i'm inside FifoGuard ctor...");
+
     if (mkfifo(path.c_str(), 0666) < 0) { /* r-w permissions.. */
 
         if (errno == EEXIST) {
@@ -33,7 +36,7 @@ Fifo::Fifo(const std::string& path)
 
 /* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
 
-Fifo::~Fifo() {
+FifoGuard::~FifoGuard() {
     if (not path_.empty()) {
         if (unlink(path_.c_str()) < 0) {
             spdlog::warn("unlink failed for fifo file : {}", path_);
@@ -43,16 +46,33 @@ Fifo::~Fifo() {
     }
 }
 
-Fifo::Fifo(Fifo&& other) noexcept
+FifoGuard::FifoGuard(FifoGuard&& other) noexcept
     : path_(std::move(other.path_)) {
     other.path_.clear();
 }
 
+FifoGuard& FifoGuard::operator=(FifoGuard&& other) noexcept {
+    if (this != &other) {
+        if (not path_.empty()) {
+            unlink(path_.c_str());
+        }
+
+        path_ = std::move(other.path_);
+        other.path_.clear();
+    }
+    return *this;
+}
+
 /* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
 
-/* @todo : maybe we don't wanna block here..? */
-auto Fifo::open_for_read() -> core::FdGuard {
-    int fd = open(path_.c_str(), O_RDONLY /* ?O_NONBLOCK? */);
+/* @note : maybe we don't wanna block here..? */
+auto FifoGuard::open_for_read(bool blocking) -> core::FdGuard {
+    auto flags = O_RDONLY;
+    if (not blocking) {
+        flags |= O_NONBLOCK;
+    }
+
+    int fd = open(path_.c_str(), flags);
 
 
     if (fd < 0) {
@@ -64,7 +84,7 @@ auto Fifo::open_for_read() -> core::FdGuard {
 
 /* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
 
-auto Fifo::open_for_write() const -> core::FdGuard {
+auto FifoGuard::open_for_write() const -> core::FdGuard {
     int fd = open(path_.c_str(), O_WRONLY);
     if (fd < 0) {
         throw std::runtime_error("open_for write() failed for : [" + path_ + "]");
@@ -73,7 +93,7 @@ auto Fifo::open_for_write() const -> core::FdGuard {
     return core::FdGuard(fd);
 }
 
-auto Fifo::path() const -> std::string_view {
+auto FifoGuard::path() const -> std::string_view {
     return path_;
 }
 

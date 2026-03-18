@@ -27,7 +27,7 @@ void ForkSpawner::spawn(std::function<void()> task) {
             spdlog::error("exception in child process... : {}", er.what());
         }
 
-        exit(0);
+        _exit(0);
     } else {
         spdlog::info("spawned child process with pid:={}", pid);
         children_.push_back(pid);

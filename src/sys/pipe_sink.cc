@@ -11,6 +11,8 @@
 namespace kasptest::sys::ipc {
 
 PipeResultSink::PipeResultSink() {
+    spdlog::info("[debug] : i'm inside PipeResultSink ctor...");
+
     int fds[2];
 
     if (pipe(fds) < 0) {

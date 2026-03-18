@@ -1,5 +1,3 @@
-#pragma once
-
 #include "listener.hpp"
 #include "conn.hpp"
 
@@ -14,9 +12,16 @@
 namespace kasptest::sys::net {
 
 TcpListener::TcpListener(int port) {
+    spdlog::info("[debug] : i'm inside TcpListener ctor and still alive!");  // :)
+    /*
+     *
+     */
     int scfd = socket(AF_INET, SOCK_STREAM, 0);
 
-    /*   */
+    spdlog::info("[debug] : listener's socket fd := {}", scfd);
+    /*
+     *
+     */
     if (scfd < 0) {
         throw std::runtime_error("socket() failed...");
     }
@@ -54,8 +59,9 @@ TcpConnection TcpListener::accept() {
     sockaddr_in cleint_addr{};
     socklen_t clintlen = sizeof(cleint_addr);
 
-    int new_client_fd
-        = ::accept(fd_guard_.get_fd(), reinterpret_cast<sockaddr*>(&cleint_addr), &clintlen);
+    int new_client_fd = ::accept(
+        fd_guard_.get_fd(), reinterpret_cast<sockaddr*>(&cleint_addr), &clintlen
+    );
 
     if (new_client_fd < 0) {
         throw std::runtime_error("accept() failed...");

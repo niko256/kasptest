@@ -26,6 +26,8 @@ class TcpConnection {
     void shutdown_write();
 
     int fd() const;
+
+    int release();
 };
 
 

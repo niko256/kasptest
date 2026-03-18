@@ -65,11 +65,12 @@ auto Poller::wait(int timeout) -> std::vector<PollEvent> {
     int num_evnts = epoll_wait(efd_guard_.get_fd(), events, MAX_EVENTS, timeout);
 
     if (num_evnts < 0) {
-        if (errno == EINTR)
+        if (errno == EINTR) {
             return {};
+        }
+        throw std::runtime_error("epoll_wait() failed...");
     }
 
-    throw std::runtime_error("epoll_wait() failed...");
 
     std::vector<PollEvent> res;
     res.reserve(num_evnts);

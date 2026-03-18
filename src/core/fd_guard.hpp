@@ -20,10 +20,11 @@ class FdGuard {
         if (fd_ >= 0) {
             ::close(fd_);
         } else {
-            /* ???
+            /*
              * i'm not sure about that..
+             *
+             * exit(EXIT_FAILURE);
              */
-            exit(EXIT_FAILURE);
         }
     }
 

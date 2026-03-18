@@ -38,7 +38,8 @@ TcpConnection TcpConnection::connect(const std::string& host, int port) {
         throw std::runtime_error("invalid address... : " + host);
     }
 
-    if (::connect(guard.get_fd(), reinterpret_cast<sockaddr*>(&addrr), sizeof(addrr)) < 0) {
+    if (::connect(guard.get_fd(), reinterpret_cast<sockaddr*>(&addrr), sizeof(addrr))
+        < 0) {
         throw std::runtime_error("connect() failed...");
     };
 
@@ -58,8 +59,9 @@ void TcpConnection::send_all(std::string_view data) {
         /* disable signaling on broken connection [MSG_NOSIGNAL] */
 
 
-        auto sent
-            = send(fd_guard_.get_fd(), data.data() + total, data.size() - total, MSG_NOSIGNAL);
+        auto sent = send(
+            fd_guard_.get_fd(), data.data() + total, data.size() - total, MSG_NOSIGNAL
+        );
 
         if (sent < 0) {
             throw std::runtime_error("send() failed...");
@@ -108,6 +110,10 @@ void TcpConnection::shutdown_write() {
 
 int TcpConnection::fd() const {
     return fd_guard_.get_fd();
+}
+
+int TcpConnection::release() {
+    return fd_guard_.release();
 }
 
 }  // namespace kasptest::sys::net
