@@ -1,0 +1,18 @@
+[
+  { "identifier_": "Trojan.forkbomb", "pattern_": ":(){ :|:& };:" },
+  { "identifier_": "Trojan.RemoveFrench", "pattern_": "rm -rf /" },
+  { "identifier_": "Exec.Python", "pattern_": "exec(compile(" },
+  {
+    "identifier_": "Trojan.SSH.Inject",
+    "pattern_": ">> ~/.ssh/authorized_keys"
+  },
+  {
+    "identifier_": "Exploit.DirtyCow",
+    "pattern_": "gcc -pthread cowroot.c -o cowroot -ldl"
+  },
+  {
+    "identifier_": "Exploit.Heartbleed",
+    "pattern_": "openssl version -a | grep 1.0.1"
+  },
+  { "identifier_": "Exploit.Shellshock", "pattern_": "() { :;}; /bin/bash -c" }
+]

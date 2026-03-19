@@ -48,11 +48,11 @@ void Poller::unsubscribe(int fd) {
 
 
     if (epoll_ctl(efd_guard_.get_fd(), EPOLL_CTL_DEL, fd, &ev) < 0) {
-        spdlog::warn("[Poller] : epoll_ctl(DEL) failed for fd:={}", fd);
+        spdlog::warn("[debug] : epoll_ctl(DEL) failed for fd:={}", fd);
         /* throw std::runtime_error("epoll_ctl(DEL) failed..."); */
 
     } else {
-        spdlog::trace("[Poller] : unsubscribed from fd:={}", fd);
+        spdlog::trace("[debug] : unsubscribed from fd:={}", fd);
     }
 }
 

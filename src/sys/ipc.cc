@@ -22,6 +22,8 @@ ServerStatsPipeEndpoint::ServerStatsPipeEndpoint(const std::string& base_path)
     req_read_fd_ = req_fifo_gd_.open_for_read();
 }
 
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
+
 int ServerStatsPipeEndpoint::fd() const {
     return req_read_fd_.get_fd();
 }
@@ -54,7 +56,7 @@ void ServerStatsPipeEndpoint::handle_request(const core::StatSnapshot& statss) {
                 if (res > 0) {
                     written += res;
                 } else if (res < 0) {
-                    spdlog::trace("[trace] : handle request");
+                    spdlog::trace("[trace] : hi from request handler");
                     spdlog::warn("failed to write stats response...");
                     break;
                 }
@@ -65,15 +67,20 @@ void ServerStatsPipeEndpoint::handle_request(const core::StatSnapshot& statss) {
     }
 }
 
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
+
 ClientStatsPipeEndpoint::ClientStatsPipeEndpoint(const std::string& base_path)
     : req_path_(base_path + "_req"),
       resp_path_(base_path + "_resp") {}
+
+/* *---*---*---*---*---*---*---*---*---*---*---*---*---*---* */
 
 auto ClientStatsPipeEndpoint::request_stats() -> core::StatSnapshot {
     {
         FifoGuard req(req_path_);
         auto write_fd = req.open_for_write();
 
+        /* epoll waky waky */
         char ping = '1';
         write(write_fd.get_fd(), &ping, 1);
     }
